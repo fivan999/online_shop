@@ -1,12 +1,13 @@
 import django.conf
 import django.conf.urls.static
 import django.contrib
+import django.contrib.admin.sites
 import django.contrib.staticfiles.urls
 import django.urls
-import django.contrib.admin.sites
 
 
 urlpatterns = [
+    django.urls.path('', django.urls.include('shop.urls')),
     django.urls.path('admin/', django.contrib.admin.site.urls),
     django.urls.path(
         'ckeditor/', django.urls.include('ckeditor_uploader.urls')

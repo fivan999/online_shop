@@ -1,8 +1,14 @@
+import time
+
+import ckeditor_uploader.fields
+import shop.managers
+import transliterate
+
 import django.core.validators
 import django.db.models
-import transliterate
-import ckeditor_uploader.fields
-import time
+import django.urls
+
+import sorl.thumbnail
 
 
 def generate_image_path(obj: django.db.models.Model, filename: str) -> str:
@@ -11,7 +17,7 @@ def generate_image_path(obj: django.db.models.Model, filename: str) -> str:
     filename = (
         filename[: filename.rfind('.')]
         + str(int(time.time()))
-        + filename[filename.rfind('.'):]
+        + filename[filename.rfind('.') :]
     )
     return f'shop/{obj.pk}/{filename}'
 
@@ -23,20 +29,30 @@ class Category(django.db.models.Model):
         max_length=200, verbose_name='имя', help_text='Имя категории'
     )
     slug = django.db.models.SlugField(
-        max_length=200, verbose_name='слаг', help_text='Слаг имени категории'
+        max_length=200,
+        verbose_name='слаг',
+        help_text='Слаг имени',
+        unique=True,
     )
 
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
 
-    def __str__(self):
+    def __str__(self) -> str:
         """строковое представление"""
         return self.name[:15]
+
+    def get_absolute_url(self) -> str:
+        return django.urls.reverse(
+            'shop:products_by_category', kwargs={'category_pk': self.pk}
+        )
 
 
 class Product(django.db.models.Model):
     """модель продукта"""
+
+    objects = shop.managers.ProductManager()
 
     category = django.db.models.ForeignKey(
         to=Category,
@@ -52,18 +68,16 @@ class Product(django.db.models.Model):
         max_length=200,
         verbose_name='слаг',
         help_text='Слаг для продукта',
-        db_index=True,
+        unique=True,
     )
     image = django.db.models.ImageField(
         verbose_name='картинка',
         help_text='Картинка продукта',
         blank=True,
-        upload_to=generate_image_path
+        upload_to=generate_image_path,
     )
     description = ckeditor_uploader.fields.RichTextUploadingField(
-        help_text='Описание продукта',
-        verbose_name='описание',
-        blank=True
+        help_text='Описание продукта', verbose_name='описание', blank=True
     )
     price = django.db.models.DecimalField(
         max_digits=10,
@@ -86,6 +100,17 @@ class Product(django.db.models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
 
-    def __str__(self):
+    def __str__(self) -> str:
         """строковое представление"""
         return self.name[:15]
+
+    def get_absolute_url(self) -> str:
+        return django.urls.reverse(
+            'shop:product', kwargs={'product_pk': self.pk}
+        )
+
+    def get_image_300x300(self):
+        """получаем миниатюру изображения"""
+        return sorl.thumbnail.get_thumbnail(
+            self.image, '300x300', crop='center', quality=70
+        )
