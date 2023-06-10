@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
     'debug_toolbar',
     'ckeditor',
     'ckeditor_uploader',
@@ -58,6 +60,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.get_cart',
             ],
         },
     },
@@ -194,3 +197,5 @@ CKEDITOR_CONFIGS = {
         ),
     }
 }
+
+CART_SESSION_ID = 'cart'

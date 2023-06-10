@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load shop_tags %}
+
+{% block title %}
+  {% if category %}{{ category.name }}{% else %}Интернет магазин{% endif %}
+{% endblock %}
 
 {% block content %}
   <div id="sidebar">
@@ -9,7 +12,13 @@
       <li {% if not category %}class="selected"{% endif %}>
         <a href="{% url "shop:products" %}">Все товары</a>
       </li>
-      {% get_active_categories %}
+      <ul>
+        {% for category_loop in categories %}
+          <li {% if category_loop.pk == category.pk %}class="selected"{% endif %}>
+            <a href="{{ category_loop.get_absolute_url }}">{{ category_loop.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
     </ul>
   </div>
   <div id="main" class="product-list">

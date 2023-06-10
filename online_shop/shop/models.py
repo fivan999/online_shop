@@ -2,13 +2,12 @@ import time
 
 import ckeditor_uploader.fields
 import shop.managers
+import sorl.thumbnail
 import transliterate
 
 import django.core.validators
 import django.db.models
 import django.urls
-
-import sorl.thumbnail
 
 
 def generate_image_path(obj: django.db.models.Model, filename: str) -> str:

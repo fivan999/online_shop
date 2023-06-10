@@ -1,8 +1,10 @@
+import cart.forms
 import shop.models
+import shop.services
 
 import django.db.models
-import django.views.generic
 import django.shortcuts
+import django.views.generic
 
 
 class ProductListView(django.views.generic.ListView):
@@ -14,11 +16,14 @@ class ProductListView(django.views.generic.ListView):
     def get_context_data(self, *args, **kwargs) -> dict:
         """дополнительно получаем категорию"""
         context = super().get_context_data(*args, **kwargs)
-        category_pk = kwargs.get('category_pk')
+        category_pk = self.kwargs.get('category_pk')
         if category_pk:
             context['category'] = django.shortcuts.get_object_or_404(
                 shop.models.Category, pk=category_pk
             )
+        context[
+            'categories'
+        ] = shop.services.get_categories_with_at_least_one_item()
         return context
 
     def get_queryset(self) -> django.db.models.QuerySet:
@@ -31,6 +36,12 @@ class ProductListView(django.views.generic.ListView):
 
 class ProductDetailView(django.views.generic.DetailView):
     """один продукт"""
+
+    def get_context_data(self, *args, **kwargs) -> dict:
+        """дополнительно добавляем форму добавления товара в корзину"""
+        context = super().get_context_data(*args, **kwargs)
+        context['form'] = cart.forms.AddProductToCartForm()
+        return context
 
     template_name = 'shop/product/detail.html'
     pk_url_kwarg = 'product_pk'

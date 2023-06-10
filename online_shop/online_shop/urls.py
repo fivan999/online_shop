@@ -8,6 +8,7 @@ import django.urls
 
 urlpatterns = [
     django.urls.path('', django.urls.include('shop.urls')),
+    django.urls.path('cart/', django.urls.include('cart.urls')),
     django.urls.path('admin/', django.contrib.admin.site.urls),
     django.urls.path(
         'ckeditor/', django.urls.include('ckeditor_uploader.urls')
