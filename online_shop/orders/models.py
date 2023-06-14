@@ -29,12 +29,12 @@ class Order(django.db.models.Model):
         verbose_name='оплачено',
         help_text='Оплачен ззаказ или нет',
     )
-    created = django.db.models.DateTimeField(
+    created_at = django.db.models.DateTimeField(
         verbose_name='время создания',
         help_text='Время создания заказа',
         auto_now_add=True,
     )
-    updated = django.db.models.DateTimeField(
+    updated_at = django.db.models.DateTimeField(
         verbose_name='время обновления',
         help_text='Время обновления заказа',
         auto_now=True,
