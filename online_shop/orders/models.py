@@ -1,6 +1,8 @@
 import shop.models
 
+import django.conf
 import django.db.models
+import django.utils.safestring
 
 
 class Order(django.db.models.Model):
@@ -39,6 +41,7 @@ class Order(django.db.models.Model):
         help_text='Время обновления заказа',
         auto_now=True,
     )
+    stripe_id = django.db.models.CharField(max_length=250, blank=True)
 
     def __str__(self) -> str:
         """строковое представление"""
@@ -51,6 +54,21 @@ class Order(django.db.models.Model):
     def get_total_cost(self) -> int:
         """полная стоимость заказа"""
         return sum([item.get_cost() for item in self.order_products.all()])
+
+    def get_stripe_payment_url(self) -> str:
+        """ссылка на просмотр заказа в stripe"""
+        if not self.stripe_id:
+            return ''
+        if '_test_' in django.conf.settings.STRIPE_SECRET_KEY:
+            path = '/test/'
+        else:
+            path = '/'
+        url = f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
+        return django.utils.safestring.mark_safe(
+            f'<a href="{url}" target="blank">{self.stripe_id}</a>'
+        )
+
+    get_stripe_payment_url.short_description = 'заказ в stripe'
 
 
 class OrderProduct(django.db.models.Model):

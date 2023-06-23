@@ -21,9 +21,10 @@ class ProductListView(django.views.generic.ListView):
             context['category'] = django.shortcuts.get_object_or_404(
                 shop.models.Category, pk=category_pk
             )
+        category_manager = shop.models.Category.objects
         context[
             'categories'
-        ] = shop.services.get_categories_with_at_least_one_item()
+        ] = category_manager.get_categories_with_at_least_one_item()
         return context
 
     def get_queryset(self) -> django.db.models.QuerySet:
@@ -37,13 +38,13 @@ class ProductListView(django.views.generic.ListView):
 class ProductDetailView(django.views.generic.DetailView):
     """один продукт"""
 
+    template_name = 'shop/product/detail.html'
+    pk_url_kwarg = 'product_pk'
+    context_object_name = 'product'
+    queryset = shop.models.Product.objects.get_available()
+
     def get_context_data(self, *args, **kwargs) -> dict:
         """дополнительно добавляем форму добавления товара в корзину"""
         context = super().get_context_data(*args, **kwargs)
         context['form'] = cart.forms.AddProductToCartForm()
         return context
-
-    template_name = 'shop/product/detail.html'
-    pk_url_kwarg = 'product_pk'
-    context_object_name = 'product'
-    queryset = shop.models.Product.objects.get_available()

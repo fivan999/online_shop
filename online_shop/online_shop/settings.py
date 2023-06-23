@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
+    'core.apps.CoreConfig',
     'debug_toolbar',
     'ckeditor',
     'ckeditor_uploader',
@@ -221,3 +223,14 @@ if os.getenv('USE_SMTP', default='False').lower() in YES_OPTIONS:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
     EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
+
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', default='pub_key')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', default='sec_key')
+STRIPE_API_VERSION = '2022-11-15'
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET', default='secret')
+
+CELERY_TASK_ALWAYS_EAGER = (
+    os.getenv('CELERY_TASK_ALWAYS_EAGER', default='true').lower().strip()
+    in YES_OPTIONS
+)

@@ -1,6 +1,7 @@
 import cart.cart
 import cart.forms
 import shop.models
+import shop.services
 
 import django.http
 import django.shortcuts
@@ -14,9 +15,7 @@ class AddProductToCartView(django.views.generic.View):
         self, request: django.http.HttpRequest, product_pk: int
     ) -> django.http.HttpResponse:
         cart_obj = cart.cart.Cart(request)
-        product = django.shortcuts.get_object_or_404(
-            shop.models.Product, pk=product_pk
-        )
+        product = shop.services.get_product_or_404(pk=product_pk)
         form = cart.forms.AddProductToCartForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -35,9 +34,7 @@ class RemoveProductFromCartView(django.views.generic.View):
         self, request: django.http.HttpRequest, product_pk: int
     ) -> django.http.HttpResponse:
         cart_obj = cart.cart.Cart(request)
-        product = django.shortcuts.get_object_or_404(
-            shop.models.Product, pk=product_pk
-        )
+        product = shop.services.get_product_or_404(pk=product_pk)
         cart_obj.remove_product(product=product)
         return django.shortcuts.redirect('cart:detail')
 
@@ -50,7 +47,8 @@ class CartDetailView(django.views.generic.View):
     ) -> django.http.HttpResponse:
         """просмотр корзины товаров"""
         cart_obj = cart.cart.Cart(request)
-        for item in cart_obj:
+        items = [item for item in cart_obj]
+        for item in items:
             item['update_quantity'] = cart.forms.AddProductToCartForm(
                 initial={
                     'quantity': item['quantity'],
@@ -58,5 +56,7 @@ class CartDetailView(django.views.generic.View):
                 }
             )
         return django.shortcuts.render(
-            request, 'cart/detail.html', {'cart': cart_obj}
+            request,
+            'cart/detail.html',
+            {'cart': cart_obj, 'cart_items': items},
         )

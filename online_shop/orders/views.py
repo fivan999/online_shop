@@ -1,13 +1,13 @@
 import cart.cart
 import orders.forms
 import orders.models
+import orders.tasks
 
 import django.http
 import django.shortcuts
 import django.urls
 import django.views.generic
 import django.views.generic.edit
-import orders.tasks
 
 
 class OrderCreateView(django.views.generic.edit.FormView):
@@ -37,8 +37,9 @@ class OrderCreateView(django.views.generic.edit.FormView):
             orders.models.OrderProduct.objects.bulk_create(order_produts)
             cart_obj.clear()
             orders.tasks.send_mail_about_success_order.delay(order.pk)
-            return django.shortcuts.render(
-                request, 'orders/created.html', {'order': order}
+            request.session['order_id'] = order.pk
+            return django.shortcuts.redirect(
+                django.urls.reverse('payment:process')
             )
         else:
             return django.shortcuts.render(

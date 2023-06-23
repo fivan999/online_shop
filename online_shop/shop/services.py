@@ -1,12 +1,8 @@
 import shop.models
 
-import django.db.models
+import django.shortcuts
 
 
-def get_categories_with_at_least_one_item():
-    """категории у которых есть хотя бы один товар"""
-    return shop.models.Category.objects.annotate(
-        count_products=django.db.models.Count(
-            'products', filter=django.db.models.Q(products__available=True)
-        )
-    ).filter(count_products__gt=0)
+def get_product_or_404(pk: int) -> shop.models.Product:
+    """получаем объект Product или ошибка 404"""
+    return django.shortcuts.get_object_or_404(shop.models.Product, pk=pk)

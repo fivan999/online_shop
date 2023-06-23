@@ -2,6 +2,8 @@ import orders.models
 
 import django.contrib.admin
 
+import core.services
+
 
 class OrderProductAdmin(django.contrib.admin.TabularInline):
     """модель OrderProduct в админке"""
@@ -25,7 +27,9 @@ class OrderAdmin(django.contrib.admin.ModelAdmin):
         'paid',
         'created_at',
         'updated_at',
+        'get_stripe_payment_url',
     )
     list_filter = ('paid', 'created_at', 'updated_at')
     list_display_links = ('id',)
     inlines = (OrderProductAdmin,)
+    actions = (core.services.export_data_to_csv,)

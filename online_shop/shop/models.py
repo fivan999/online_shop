@@ -24,6 +24,8 @@ def generate_image_path(obj: django.db.models.Model, filename: str) -> str:
 class Category(django.db.models.Model):
     """модель категории"""
 
+    objects = shop.managers.CategoryManager()
+
     name = django.db.models.CharField(
         max_length=200, verbose_name='имя', help_text='Имя категории'
     )

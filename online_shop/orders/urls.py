@@ -1,6 +1,6 @@
-import django.urls
-
 import orders.views
+
+import django.urls
 
 
 app_name = 'orders'
