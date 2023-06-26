@@ -1,6 +1,7 @@
 import http
 
 import orders.models
+import payment.tasks
 import stripe
 import stripe.error
 
@@ -46,6 +47,7 @@ class StripePaymentCompleteWebhookView(django.views.generic.View):
                     order.paid = True
                     order.stripe_id = session.payment_intent
                     order.save()
+                    payment.tasks.payment_completed_email.delay(order.pk)
                 except orders.models.Order.DoesNotExist:
                     return django.http.HttpResponse(
                         status=http.HTTPStatus.NOT_FOUND

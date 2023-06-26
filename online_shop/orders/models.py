@@ -2,6 +2,7 @@ import shop.models
 
 import django.conf
 import django.db.models
+import django.urls
 import django.utils.safestring
 
 
@@ -16,7 +17,7 @@ class Order(django.db.models.Model):
     )
     email = django.db.models.EmailField(
         verbose_name='электронная почта',
-        help_text='Электронная почта зказчика',
+        help_text='Электронная почта заказчика',
     )
     address = django.db.models.CharField(
         verbose_name='адрес', help_text='Адрес заказчика', max_length=200
@@ -41,7 +42,12 @@ class Order(django.db.models.Model):
         help_text='Время обновления заказа',
         auto_now=True,
     )
-    stripe_id = django.db.models.CharField(max_length=250, blank=True)
+    stripe_id = django.db.models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name='идентификатор платежа',
+        help_text='Идентификатор платежа в stripe',
+    )
 
     def __str__(self) -> str:
         """строковое представление"""
@@ -67,6 +73,13 @@ class Order(django.db.models.Model):
         return django.utils.safestring.mark_safe(
             f'<a href="{url}" target="blank">{self.stripe_id}</a>'
         )
+
+    def to_pdf_url(self) -> str:
+        """ссылка для получения pdf файла с информацией о заказе"""
+        url = django.urls.reverse_lazy(
+            'orders:order_pdf', kwargs={'order_pk': self.pk}
+        )
+        return django.utils.safestring.mark_safe(f'<a href="{url}">PDF</a>')
 
     get_stripe_payment_url.short_description = 'заказ в stripe'
 

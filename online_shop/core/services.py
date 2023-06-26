@@ -13,7 +13,7 @@ def export_data_to_csv(
 ) -> django.http.HttpResponse:
     """экспортируем данные модели в формат csv"""
     options = model_admin.model._meta
-    content_disposition = f'attachment; filename={options.verbose_name}.csv'
+    content_disposition = f'attachment; filename="{options.verbose_name}.csv"'
     response = django.http.HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = content_disposition
     writer = csv.writer(response)

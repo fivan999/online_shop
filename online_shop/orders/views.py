@@ -1,10 +1,14 @@
 import cart.cart
 import orders.forms
 import orders.models
+import orders.services
 import orders.tasks
+import weasyprint
 
+import django.conf
 import django.http
 import django.shortcuts
+import django.template.loader
 import django.urls
 import django.views.generic
 import django.views.generic.edit
@@ -45,3 +49,34 @@ class OrderCreateView(django.views.generic.edit.FormView):
             return django.shortcuts.render(
                 request, 'orders/create.html', {'form': form}
             )
+
+
+class GetOrderInPdfView(django.views.generic.View):
+    """сформировать pdf-документ по Order"""
+
+    def get(
+        self, request: django.http.HttpRequest, order_pk: int
+    ) -> django.http.HttpResponse:
+        """
+        получаем order, создаем pdf файл с
+        помощью рендеринга шаблона и weasyprint
+        """
+        order = orders.services.get_order_with_items_and_products_or_404(
+            pk=order_pk
+        )
+        html = django.template.loader.render_to_string(
+            template_name='orders/pdf.html', context={'order': order}
+        )
+        response = django.http.HttpResponse(content_type='application/pdf')
+        response[
+            'Content-Disposition'
+        ] = f'attachment; filename="order_{order_pk}.pdf"'
+        weasyprint.HTML(string=html).write_pdf(
+            response,
+            stylesheets=[
+                weasyprint.CSS(
+                    django.conf.settings.STATIC_ROOT / 'css/pdf.css'
+                )
+            ],
+        )
+        return response

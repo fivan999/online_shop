@@ -28,6 +28,7 @@ class OrderAdmin(django.contrib.admin.ModelAdmin):
         'created_at',
         'updated_at',
         'get_stripe_payment_url',
+        'to_pdf_url',
     )
     list_filter = ('paid', 'created_at', 'updated_at')
     list_display_links = ('id',)
