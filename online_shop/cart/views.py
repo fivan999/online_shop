@@ -1,5 +1,6 @@
 import cart.cart
 import cart.forms
+import coupons.forms
 import shop.models
 import shop.services
 
@@ -58,5 +59,9 @@ class CartDetailView(django.views.generic.View):
         return django.shortcuts.render(
             request,
             'cart/detail.html',
-            {'cart': cart_obj, 'cart_items': items},
+            {
+                'cart': cart_obj,
+                'cart_items': items,
+                'coupon_activate_form': coupons.forms.CouponActivateForm(),
+            },
         )

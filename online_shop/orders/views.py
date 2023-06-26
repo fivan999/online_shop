@@ -27,7 +27,12 @@ class OrderCreateView(django.views.generic.edit.FormView):
         form = self.form_class(request.POST)
         cart_obj = cart.cart.Cart(request)
         if form.is_valid() and len(cart_obj) > 0:
-            order = form.save()
+            order = form.save(commit=False)
+            coupon = cart_obj.get_coupon()
+            if coupon:
+                order.coupon = coupon
+                order.discount = coupon.discount
+            order.save()
             order_produts = []
             for item in cart_obj:
                 order_produts.append(
@@ -61,7 +66,7 @@ class GetOrderInPdfView(django.views.generic.View):
         получаем order, создаем pdf файл с
         помощью рендеринга шаблона и weasyprint
         """
-        order = orders.services.get_order_with_items_and_products_or_404(
+        order = orders.services.get_order_with_coupon_and_products_or_404(
             pk=order_pk
         )
         html = django.template.loader.render_to_string(
@@ -75,7 +80,7 @@ class GetOrderInPdfView(django.views.generic.View):
             response,
             stylesheets=[
                 weasyprint.CSS(
-                    django.conf.settings.STATIC_ROOT / 'css/pdf.css'
+                    django.conf.settings.STATICFILES_DIRS[0] / 'css/pdf.css'
                 )
             ],
         )

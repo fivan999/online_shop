@@ -1,6 +1,10 @@
+import decimal
+
+import coupons.models
 import shop.models
 
 import django.conf
+import django.core.validators
 import django.db.models
 import django.urls
 import django.utils.safestring
@@ -48,6 +52,24 @@ class Order(django.db.models.Model):
         verbose_name='идентификатор платежа',
         help_text='Идентификатор платежа в stripe',
     )
+    coupon = django.db.models.ForeignKey(
+        to=coupons.models.Coupon,
+        verbose_name='купон',
+        help_text='Купон, применяемый к заказу',
+        blank=True,
+        null=True,
+        on_delete=django.db.models.SET_NULL,
+        related_name='orders',
+    )
+    discount = django.db.models.IntegerField(
+        verbose_name='скидка',
+        help_text='Скидка к заказу',
+        default=0,
+        validators=[
+            django.core.validators.MinValueValidator(0),
+            django.core.validators.MaxValueValidator(100),
+        ],
+    )
 
     def __str__(self) -> str:
         """строковое представление"""
@@ -57,9 +79,22 @@ class Order(django.db.models.Model):
         verbose_name = 'заказ'
         verbose_name_plural = 'заказы'
 
+    def get_total_cost_before_discount(self) -> decimal.Decimal:
+        """сумма заказа без скидки"""
+        return sum([item.get_cost() for item in self.order_products.all()])
+
+    def get_discount(self) -> decimal.Decimal:
+        """скидка"""
+        total_cost_before_discount = self.get_total_cost_before_discount()
+        if self.discount:
+            return total_cost_before_discount * (
+                self.discount / decimal.Decimal(100)
+            )
+        return 0
+
     def get_total_cost(self) -> int:
         """полная стоимость заказа"""
-        return sum([item.get_cost() for item in self.order_products.all()])
+        return self.get_total_cost_before_discount() - self.get_discount()
 
     def get_stripe_payment_url(self) -> str:
         """ссылка на просмотр заказа в stripe"""

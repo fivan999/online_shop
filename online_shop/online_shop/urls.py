@@ -11,6 +11,7 @@ urlpatterns = [
     django.urls.path('cart/', django.urls.include('cart.urls')),
     django.urls.path('orders/', django.urls.include('orders.urls')),
     django.urls.path('payment/', django.urls.include('payment.urls')),
+    django.urls.path('coupons/', django.urls.include('coupons.urls')),
     django.urls.path('admin/', django.contrib.admin.site.urls),
     django.urls.path(
         'ckeditor/', django.urls.include('ckeditor_uploader.urls')

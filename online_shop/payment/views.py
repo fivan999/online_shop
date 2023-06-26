@@ -18,9 +18,7 @@ class PaymentProcessView(django.views.generic.TemplateView):
     def get_context_data(self, *args, **kwargs) -> dict:
         """добавляем номер заказа и сам заказ в шаблон"""
         context = super().get_context_data(*args, **kwargs)
-        context[
-            'order'
-        ] = orders.services.get_order_with_items_and_products_or_404(
+        context['order'] = orders.services.get_order_with_coupon_and_products(
             pk=self.request.session.get('order_id')
         )
         return context
@@ -29,7 +27,7 @@ class PaymentProcessView(django.views.generic.TemplateView):
         self, request: django.http.HttpRequest
     ) -> django.http.HttpResponse:
         """обрабатываем платеж"""
-        order = orders.services.get_order_with_items_and_products_or_404(
+        order = orders.services.get_order_with_coupon_and_products_or_404(
             pk=request.session.get('order_id')
         )
         session = payment.stripe_services.create_payment_session_by_order(

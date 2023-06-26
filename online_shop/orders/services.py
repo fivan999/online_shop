@@ -4,10 +4,11 @@ import django.db.models
 import django.http
 
 
-def get_order_with_items_and_products(pk: int) -> django.db.models.QuerySet:
+def get_order_with_coupon_and_products(pk: int) -> django.db.models.QuerySet:
     """получаем Order, принадлежащие ему OrderProduct и Product"""
     return (
         orders.models.Order.objects.filter(pk=pk)
+        .select_related('coupon')
         .prefetch_related(
             django.db.models.Prefetch(
                 'order_products',
@@ -20,11 +21,11 @@ def get_order_with_items_and_products(pk: int) -> django.db.models.QuerySet:
     )
 
 
-def get_order_with_items_and_products_or_404(
+def get_order_with_coupon_and_products_or_404(
     pk: int,
 ) -> django.db.models.QuerySet:
     """получаем Order, принадлежащие ему OrderProduct и Product или 404"""
-    order = get_order_with_items_and_products(pk=pk)
+    order = get_order_with_coupon_and_products(pk=pk)
     if not order:
         raise django.http.Http404()
     return order

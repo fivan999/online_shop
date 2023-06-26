@@ -46,13 +46,39 @@
           </tr>
         {% endwith %}
       {% endfor %}
+      {% with coupon=cart.get_coupon %}
+        {% if coupon %}
+          <tr class="subtotal">
+            <td>Подытог</td>
+            <td colspan="4"></td>
+            <td class="num">${{ cart.get_total_price|floatformat:2 }}</td>
+          </tr>
+          <tr>
+            <td>
+              "{{ coupon.code }}" купон
+              ({{ coupon.discount }}% скидка)
+            </td>
+            <td colspan="4"></td>
+            <td class="num neg">
+            – ${{ cart.get_discount|floatformat:2 }}
+            </td>
+          </tr>
+        {% endif %}
+      {% endwith %}
       <tr class="total">
-        <td>Всего</td>
+        <td>Итого</td>
         <td colspan="4"></td>
-        <td class="num">${{ cart.get_total_price }}</td>
+        <td class="num">${{ cart.get_total_price_after_discount }}</td>
       </tr>
     </tbody>
   </table>
+  <p>Активировать купон:</p>
+  <form action="{% url "coupons:activate" %}" method="post">
+    {% csrf_token %}
+    {{ coupon_activate_form.code.label }}:
+    {{ coupon_activate_form.code }}
+    <input type="submit" value="Активировать">
+  </form>
   <p class="text-right">
     <a href="{% url "shop:products" %}" class="button light">Товары</a>
     <a href="{% url "orders:create" %}" class="button">

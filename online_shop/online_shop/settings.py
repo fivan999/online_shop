@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
+    'coupons.apps.CouponsConfig',
     'core.apps.CoreConfig',
     'debug_toolbar',
     'ckeditor',
@@ -109,11 +110,10 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static_dev'
 
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static_dev',
-# ]
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

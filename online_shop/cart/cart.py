@@ -1,5 +1,6 @@
 import decimal
 
+import coupons.models
 import shop.models
 
 import django.conf
@@ -16,6 +17,7 @@ class Cart:
         if not cart:
             cart = self.session[django.conf.settings.CART_SESSION_ID] = {}
         self.cart = cart
+        self.coupon_id = self.session.get('coupon_id')
 
     def add_product(
         self,
@@ -48,7 +50,7 @@ class Cart:
         del self.session[django.conf.settings.CART_SESSION_ID]
         self.save()
 
-    def get_total_price(self) -> int:
+    def get_total_price(self) -> decimal.Decimal:
         """получаем стоимость всей корзины"""
         return sum(
             [
@@ -56,6 +58,28 @@ class Cart:
                 for item in self.cart.values()
             ]
         )
+
+    def get_coupon(self) -> coupons.models.Coupon:
+        """возвращаем объект Coupon"""
+        coupon = None
+        if self.coupon_id:
+            coupon = coupons.models.Coupon.objects.filter(
+                pk=self.coupon_id
+            ).first()
+        return coupon
+
+    def get_discount(self) -> decimal.Decimal:
+        """возвращаем сумму скидки"""
+        coupon = self.get_coupon()
+        if coupon:
+            return (
+                coupon.discount / decimal.Decimal(100)
+            ) * self.get_total_price()
+        return decimal.Decimal(0)
+
+    def get_total_price_after_discount(self) -> decimal.Decimal:
+        """возвращаем цену корзины после скидки"""
+        return self.get_total_price() - self.get_discount()
 
     def __len__(self) -> int:
         """количество товаров в корзине"""
