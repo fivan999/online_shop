@@ -1,0 +1,311 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-28 00:38+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\cart\apps.py:11
+msgid "cart"
+msgstr "корзина"
+
+#: .\cart\forms.py:12
+msgid "Quantity"
+msgstr "Количество"
+
+#: .\cart\forms.py:13
+msgid "Choose quantity of products"
+msgstr "Выберите количество товаров"
+
+#: .\core\apps.py:11
+msgid "core"
+msgstr "кор"
+
+#: .\coupons\apps.py:11 .\coupons\models.py:38
+msgid "coupons"
+msgstr "купоны"
+
+#: .\coupons\forms.py:9
+msgid "Enter coupon's activation code"
+msgstr "Введите код активации купона"
+
+#: .\coupons\models.py:10
+msgid "code"
+msgstr "код"
+
+#: .\coupons\models.py:11
+msgid "Coupon's activation code"
+msgstr "Код активации купона"
+
+#: .\coupons\models.py:16
+msgid "active sinse"
+msgstr "активен с"
+
+#: .\coupons\models.py:17
+msgid "Coupon's start time"
+msgstr "Время начала действия купона"
+
+#: .\coupons\models.py:20
+msgid "active to"
+msgstr "активен до"
+
+#: .\coupons\models.py:21
+msgid "Coupon's expiration time"
+msgstr "Время истечения действия купона"
+
+#: .\coupons\models.py:24 .\orders\models.py:70
+msgid "discount"
+msgstr "скидка"
+
+#: .\coupons\models.py:25
+msgid "Discount in percents"
+msgstr "Скидка в процентах"
+
+#: .\coupons\models.py:32
+msgid "active"
+msgstr "активен"
+
+#: .\coupons\models.py:33
+msgid "Whether coupon is active or not"
+msgstr "Активен ли купон или нет"
+
+#: .\coupons\models.py:37 .\orders\models.py:62
+msgid "coupon"
+msgstr "купон"
+
+#: .\online_shop\settings.py:115
+msgid "English"
+msgstr "Английский"
+
+#: .\online_shop\settings.py:116
+msgid "Russian"
+msgstr "Русский"
+
+#: .\orders\apps.py:11 .\orders\models.py:67 .\orders\models.py:85
+msgid "orders"
+msgstr "заказы"
+
+#: .\orders\models.py:18 .\shop\models.py:32 .\shop\models.py:68
+msgid "name"
+msgstr "имя"
+
+#: .\orders\models.py:18
+msgid "Orderer's name"
+msgstr "Имя заказчика"
+
+#: .\orders\models.py:21
+msgid "surname"
+msgstr "фамилия"
+
+#: .\orders\models.py:22
+msgid "Orderer's surname"
+msgstr "Фамилия заказчика"
+
+#: .\orders\models.py:26
+msgid "email"
+msgstr "электронная почта"
+
+#: .\orders\models.py:27
+msgid "Orderer's email"
+msgstr "Электронная почта заказчика"
+
+#: .\orders\models.py:30
+msgid "address"
+msgstr "адрес"
+
+#: .\orders\models.py:31
+msgid "Orderer's address"
+msgstr "Адрес заказчика"
+
+#: .\orders\models.py:35
+msgid "postal code"
+msgstr "почтовый индекс"
+
+#: .\orders\models.py:36
+msgid "Orderer's postal code"
+msgstr "Почтовый индекс заказчика"
+
+#: .\orders\models.py:41
+msgid "payed"
+msgstr "оплачено"
+
+#: .\orders\models.py:42
+msgid "Whether order is paid or not"
+msgstr "Оплачен заказ или нет"
+
+#: .\orders\models.py:45
+msgid "creation time"
+msgstr "время создания"
+
+#: .\orders\models.py:46
+msgid "Order's creation time"
+msgstr "Время создания заказа"
+
+#: .\orders\models.py:50
+msgid "update time"
+msgstr "время обновления"
+
+#: .\orders\models.py:51
+msgid "Order's update time"
+msgstr "Время обновления заказа"
+
+#: .\orders\models.py:57
+msgid "payment id"
+msgstr "идентификатор платежа"
+
+#: .\orders\models.py:58
+msgid "Payment id in stripe"
+msgstr "Идентификатор платежа в stripe"
+
+#: .\orders\models.py:63
+msgid "Coupon applied to the order"
+msgstr "Купон, примененный к заказу"
+
+#: .\orders\models.py:71
+msgid "Order's discount"
+msgstr "Скидка на заказ"
+
+#: .\orders\models.py:84 .\orders\models.py:134
+msgid "order"
+msgstr "заказ"
+
+#: .\orders\models.py:124
+msgid "order in stripe"
+msgstr "заказ в stripe"
+
+#: .\orders\models.py:135
+msgid "Order to which the product relates"
+msgstr "Заказ, к которому относится товар"
+
+#: .\orders\models.py:140 .\shop\models.py:111
+msgid "product"
+msgstr "товар"
+
+#: .\orders\models.py:141
+msgid "Product to which the order relates"
+msgstr "Товар, к которому относится заказ"
+
+#: .\orders\models.py:147 .\shop\models.py:90
+msgid "price"
+msgstr "цена"
+
+#: .\orders\models.py:148 .\shop\models.py:91
+msgid "Product's price"
+msgstr "Цена товара"
+
+#: .\orders\models.py:152
+msgid "quantity"
+msgstr "количество"
+
+#: .\orders\models.py:153
+msgid "Product's quantity in the order"
+msgstr "Количество товара в заказе"
+
+#: .\orders\models.py:161
+msgid "product in the order"
+msgstr "товар в заказе"
+
+#: .\orders\models.py:162
+msgid "products in the order"
+msgstr "товары в заказе"
+
+#: .\payment\apps.py:11
+#, fuzzy
+#| msgid "payment id"
+msgid "payment"
+msgstr "идентификатор платежа"
+
+#: .\shop\apps.py:11
+msgid "shop"
+msgstr "магазин"
+
+#: .\shop\models.py:32
+msgid "Category's name"
+msgstr "Название категории"
+
+#: .\shop\models.py:36 .\shop\models.py:72
+msgid "slug"
+msgstr "слаг"
+
+#: .\shop\models.py:37
+msgid "Name's slug"
+msgstr "Название слага"
+
+#: .\shop\models.py:42 .\shop\models.py:64
+msgid "category"
+msgstr "категория"
+
+#: .\shop\models.py:43
+msgid "categories"
+msgstr "категории"
+
+#: .\shop\models.py:65
+msgid "Category to which product relates to"
+msgstr "Категория, к которой относится товар"
+
+#: .\shop\models.py:68
+msgid "Product's name"
+msgstr "Имя товара"
+
+#: .\shop\models.py:73
+msgid "Product's slug"
+msgstr "Слаг товара"
+
+#: .\shop\models.py:77
+msgid "image"
+msgstr "картинка"
+
+#: .\shop\models.py:78
+msgid "Product's image"
+msgstr "Картинка товара"
+
+#: .\shop\models.py:83
+msgid "Product's description"
+msgstr "Описание товара"
+
+#: .\shop\models.py:84
+msgid "description"
+msgstr "описание"
+
+#: .\shop\models.py:96
+msgid "available"
+msgstr "доступен"
+
+#: .\shop\models.py:97
+msgid "Whether product is available or not"
+msgstr "Доступен товар или нет"
+
+#: .\shop\models.py:101
+msgid "created"
+msgstr "создан"
+
+#: .\shop\models.py:102
+msgid "Creation time"
+msgstr "Время создания"
+
+#: .\shop\models.py:106
+msgid "updated"
+msgstr "обновлен"
+
+#: .\shop\models.py:107
+msgid "Update time"
+msgstr "Время обновления"
+
+#: .\shop\models.py:112
+msgid "products"
+msgstr "товары"

@@ -1,4 +1,5 @@
 import django.apps
+from django.utils.translation import gettext_lazy as _
 
 
 class CoreConfig(django.apps.AppConfig):
@@ -6,4 +7,4 @@ class CoreConfig(django.apps.AppConfig):
 
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'core'
-    verbose_name = 'кор'
+    verbose_name = _('core')

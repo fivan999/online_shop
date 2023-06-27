@@ -1,12 +1,11 @@
 import cart.forms
 import shop.models
+import shop.recommender
 import shop.services
 
 import django.db.models
 import django.shortcuts
 import django.views.generic
-
-import shop.recommender
 
 
 class ProductListView(django.views.generic.ListView):

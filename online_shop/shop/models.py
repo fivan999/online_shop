@@ -1,3 +1,4 @@
+import secrets
 import time
 
 import ckeditor_uploader.fields
@@ -8,14 +9,15 @@ import transliterate
 import django.core.validators
 import django.db.models
 import django.urls
+from django.utils.translation import gettext_lazy as _
 
 
 def generate_image_path(obj: django.db.models.Model, filename: str) -> str:
     """генерируем файловый пусть к картинке"""
     filename = transliterate.translit(filename, 'ru', reversed=True)
     filename = (
-        filename[: filename.rfind('.')]
-        + str(int(time.time()))
+        str(int(time.time()))
+        + secrets.token_hex(nbytes=6)
         + filename[filename.rfind('.') :]
     )
     return f'shop/{obj.pk}/{filename}'
@@ -27,18 +29,18 @@ class Category(django.db.models.Model):
     objects = shop.managers.CategoryManager()
 
     name = django.db.models.CharField(
-        max_length=200, verbose_name='имя', help_text='Имя категории'
+        max_length=200, verbose_name=_('name'), help_text=_("Category's name")
     )
     slug = django.db.models.SlugField(
         max_length=200,
-        verbose_name='слаг',
-        help_text='Слаг имени',
+        verbose_name=_('slug'),
+        help_text=_("Name's slug"),
         unique=True,
     )
 
     class Meta:
-        verbose_name = 'категория'
-        verbose_name_plural = 'категории'
+        verbose_name = _('category')
+        verbose_name_plural = _('categories')
 
     def __str__(self) -> str:
         """строковое представление"""
@@ -59,47 +61,55 @@ class Product(django.db.models.Model):
         to=Category,
         related_name='products',
         on_delete=django.db.models.CASCADE,
-        verbose_name='категория',
-        help_text='Категория, к которой относится товар',
+        verbose_name=_('category'),
+        help_text=_('Category to which product relates to'),
     )
     name = django.db.models.CharField(
-        max_length=200, verbose_name='имя', help_text='Имя продукта'
+        max_length=200, verbose_name=_('name'), help_text=_("Product's name")
     )
     slug = django.db.models.SlugField(
         max_length=200,
-        verbose_name='слаг',
-        help_text='Слаг для продукта',
+        verbose_name=_('slug'),
+        help_text=_("Product's slug"),
         unique=True,
     )
     image = django.db.models.ImageField(
-        verbose_name='картинка',
-        help_text='Картинка продукта',
+        verbose_name=_('image'),
+        help_text=_("Product's image"),
         blank=True,
         upload_to=generate_image_path,
     )
     description = ckeditor_uploader.fields.RichTextUploadingField(
-        help_text='Описание продукта', verbose_name='описание', blank=True
+        help_text=_("Product's description"),
+        verbose_name=_('description'),
+        blank=True,
     )
     price = django.db.models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        verbose_name='цена',
-        help_text='Цена продукта',
+        verbose_name=_('price'),
+        help_text=_("Product's price"),
         validators=[django.core.validators.MinValueValidator(0)],
     )
     available = django.db.models.BooleanField(
-        default=True, verbose_name='доступен', help_text='Доступен ли продукт'
+        default=True,
+        verbose_name=_('available'),
+        help_text=_('Whether product is available or not'),
     )
     created = django.db.models.DateTimeField(
-        auto_now_add=True, verbose_name='создан', help_text='Время создания'
+        auto_now_add=True,
+        verbose_name=_('created'),
+        help_text=_('Creation time'),
     )
     updated = django.db.models.DateTimeField(
-        auto_now=True, verbose_name='обновлен', help_text='Время обновления'
+        auto_now=True,
+        verbose_name=_('updated'),
+        help_text=_('Update time'),
     )
 
     class Meta:
-        verbose_name = 'продукт'
-        verbose_name_plural = 'продукты'
+        verbose_name = _('product')
+        verbose_name_plural = _('products')
 
     def __str__(self) -> str:
         """строковое представление"""

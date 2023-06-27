@@ -2,13 +2,12 @@ import cart.cart
 import cart.forms
 import coupons.forms
 import shop.models
+import shop.recommender
 import shop.services
 
 import django.http
 import django.shortcuts
 import django.views.generic
-
-import shop.recommender
 
 
 class AddProductToCartView(django.views.generic.View):
@@ -75,6 +74,6 @@ class CartDetailView(django.views.generic.View):
                 ),
                 'total_price': total_price,
                 'total_price_after_discount': total_price_after_discount,
-                'discount': discount
+                'discount': discount,
             },
         )

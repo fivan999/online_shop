@@ -1,9 +1,10 @@
 import django.forms
+from django.utils.translation import gettext_lazy as _
 
 
 class CouponActivateForm(django.forms.Form):
     """форма для активации купона"""
 
     code = django.forms.CharField(
-        label='Код', help_text='Введите код активации купона'
+        label='Code', help_text=_("Enter coupon's activation code")
     )
