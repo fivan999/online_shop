@@ -9,3 +9,4 @@ sorl-thumbnail==12.9.0
 celery==5.3.0
 stripe==5.4.0
 weasyprint==59.0
+redis==4.6.0

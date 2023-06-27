@@ -6,6 +6,8 @@ import django.db.models
 import django.shortcuts
 import django.views.generic
 
+import shop.recommender
+
 
 class ProductListView(django.views.generic.ListView):
     """список продуктов"""
@@ -41,10 +43,15 @@ class ProductDetailView(django.views.generic.DetailView):
     template_name = 'shop/product/detail.html'
     pk_url_kwarg = 'product_pk'
     context_object_name = 'product'
-    queryset = shop.models.Product.objects.get_available()
+    queryset = shop.models.Product.objects.get_with_category()
 
     def get_context_data(self, *args, **kwargs) -> dict:
         """дополнительно добавляем форму добавления товара в корзину"""
         context = super().get_context_data(*args, **kwargs)
         context['form'] = cart.forms.AddProductToCartForm()
+        context[
+            'recommended_products'
+        ] = shop.recommender.Recommender().suggest_products_for(
+            [self.object], 4
+        )
         return context

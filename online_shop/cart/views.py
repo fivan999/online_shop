@@ -8,6 +8,8 @@ import django.http
 import django.shortcuts
 import django.views.generic
 
+import shop.recommender
+
 
 class AddProductToCartView(django.views.generic.View):
     """добавляем товар в корзину"""
@@ -56,6 +58,9 @@ class CartDetailView(django.views.generic.View):
                     'override_quantity': True,
                 }
             )
+        total_price = cart_obj.get_total_price()
+        total_price_after_discount = cart_obj.get_total_price_after_discount()
+        discount = total_price - total_price_after_discount
         return django.shortcuts.render(
             request,
             'cart/detail.html',
@@ -63,5 +68,13 @@ class CartDetailView(django.views.generic.View):
                 'cart': cart_obj,
                 'cart_items': items,
                 'coupon_activate_form': coupons.forms.CouponActivateForm(),
+                'recommended_products': (
+                    shop.recommender.Recommender().suggest_products_for(
+                        [item['product'] for item in items], max_results=4
+                    )
+                ),
+                'total_price': total_price,
+                'total_price_after_discount': total_price_after_discount,
+                'discount': discount
             },
         )

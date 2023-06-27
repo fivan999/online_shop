@@ -8,6 +8,10 @@ class ProductManager(django.db.models.Manager):
         """только доступные товары"""
         return self.get_queryset().filter(available=True)
 
+    def get_with_category(self) -> django.db.models.QuerySet:
+        """товары с категориями"""
+        return self.get_available().select_related('category')
+
 
 class CategoryManager(django.db.models.Manager):
     """менеджер модели Category"""

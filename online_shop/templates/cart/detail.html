@@ -51,7 +51,7 @@
           <tr class="subtotal">
             <td>Подытог</td>
             <td colspan="4"></td>
-            <td class="num">${{ cart.get_total_price|floatformat:2 }}</td>
+            <td class="num">${{ total_price|floatformat:2 }}</td>
           </tr>
           <tr>
             <td>
@@ -60,7 +60,7 @@
             </td>
             <td colspan="4"></td>
             <td class="num neg">
-            – ${{ cart.get_discount|floatformat:2 }}
+            – ${{ discount|floatformat:2 }}
             </td>
           </tr>
         {% endif %}
@@ -68,10 +68,23 @@
       <tr class="total">
         <td>Итого</td>
         <td colspan="4"></td>
-        <td class="num">${{ cart.get_total_price_after_discount }}</td>
+        <td class="num">${{ total_price_after_discount|floatformat:2 }}</td>
       </tr>
     </tbody>
   </table>
+  {% if recommended_products %}
+    <div class="recommendations">
+    <h3>Вместе с этими товарами покупатели выбирают:</h3>
+    {% for product in recommended_products %}
+      <div class="item">
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{% if product.image %}{{ product.get_image_300x300.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+        </a>
+        <p><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></p>
+      </div>
+    {% endfor %}
+    </div>
+  {% endif %}
   <p>Активировать купон:</p>
   <form action="{% url "coupons:activate" %}" method="post">
     {% csrf_token %}

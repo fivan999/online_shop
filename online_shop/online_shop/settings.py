@@ -234,3 +234,7 @@ CELERY_TASK_ALWAYS_EAGER = (
     os.getenv('CELERY_TASK_ALWAYS_EAGER', default='true').lower().strip()
     in YES_OPTIONS
 )
+
+REDIS_HOST = os.getenv('REDIS_HOST', default='localhost')
+REDIS_PORT = int(os.getenv('REDIS_PORT', default=6379))
+REDIS_DB = int(os.getenv('REDIS_DB', default=0))
