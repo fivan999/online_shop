@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Оплата отменена{% endblock %}
+{% block title %}{% trans "Payment cancelled" %}{% endblock %}
 
 {% block content %}
-  <h1>Платеж не обработан</h1>
-  <p>Во время обработки платежа произошла ошибка</p>
+  <h1>{% trans "Payment not processed" %}</h1>
+  <p>{% trans "During payment processing an error occured" %}</p>
 {% endblock %}

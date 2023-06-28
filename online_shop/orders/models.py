@@ -78,7 +78,7 @@ class Order(django.db.models.Model):
 
     def __str__(self) -> str:
         """строковое представление"""
-        return f'Заказ {self.pk}'
+        return _('Order %(pk)s') % {'pk': self.pk}
 
     class Meta:
         verbose_name = _('order')
@@ -155,7 +155,7 @@ class OrderProduct(django.db.models.Model):
 
     def __str__(self) -> str:
         """строковое представление"""
-        return f'Товар в заказе {self.pk}'
+        return _('Product in the order %(pk)s') % {'pk': self.pk}
 
     class Meta:
         verbose_name = _('product in the order')

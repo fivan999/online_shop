@@ -5,6 +5,8 @@ import django.contrib.admin
 import django.db.models
 import django.http
 
+from django.utils.translation import gettext_lazy as _
+
 
 def export_data_to_csv(
     model_admin: django.contrib.admin.ModelAdmin,
@@ -34,4 +36,4 @@ def export_data_to_csv(
     return response
 
 
-export_data_to_csv.short_description = 'Экспорт в csv'
+export_data_to_csv.short_description = _('export to csv')

@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Оплата успешна{% endblock %}
+{% block title %}{% trans "Succesfull payment" %}{% endblock %}
 
 {% block content %}
-  <h1>Оплата успешна</h1>
-  <p>Оплата прошла успешно.</p>
+  <h1>{% trans "Succesfull payment" %}</h1>
+  <p>{% trans "Payment processed succesfully" %}.</p>
 {% endblock %}

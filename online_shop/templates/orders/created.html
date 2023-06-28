@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}
-  Успешно
+  {% trans "Success" %}
 {% endblock %}
 
 {% block content %}
-  <h1>Благодарим за заказ!</h1>
-  <p>Ваш заказ успешно оформлен. Номер заказа: 
+  <h1>{% trans "Thank you for your order" %}!</h1>
+  <p>{% trans "Your order has been successfully placed. Order number" %}: 
   <strong>{{ order.id }}</strong></p>
 {% endblock %}

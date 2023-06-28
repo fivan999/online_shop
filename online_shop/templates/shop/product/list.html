@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-  {% if category %}{{ category.name }}{% else %}Интернет магазин{% endif %}
+  {% if category %}{{ category.name }}{% else %}Online Shop{% endif %}
 {% endblock %}
 
 {% block content %}
   <div id="sidebar">
-    <h3>Категории</h3>
+    <h3>{% trans "Categories" %}</h3>
     <ul>
       <li {% if not category %}class="selected"{% endif %}>
-        <a href="{% url "shop:products" %}">Все товары</a>
+        <a href="{% url "shop:products" %}">{% trans "All products" %}</a>
       </li>
       <ul>
         {% for category_loop in categories %}
@@ -26,7 +27,7 @@
       {% if category %}
         {{ category.name }}
       {% else %}
-        Товары
+        {% trans "Products" %}
       {% endif %}
     </h1>
     {% for product in products %}

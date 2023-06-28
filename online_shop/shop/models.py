@@ -4,7 +4,6 @@ import time
 import ckeditor_uploader.fields
 import shop.managers
 import sorl.thumbnail
-import transliterate
 
 import django.core.validators
 import django.db.models
@@ -14,7 +13,6 @@ from django.utils.translation import gettext_lazy as _
 
 def generate_image_path(obj: django.db.models.Model, filename: str) -> str:
     """генерируем файловый пусть к картинке"""
-    filename = transliterate.translit(filename, 'ru', reversed=True)
     filename = (
         str(int(time.time()))
         + secrets.token_hex(nbytes=6)

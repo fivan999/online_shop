@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'sorl.thumbnail',
     'django_cleanup.apps.CleanupConfig',
+    'rosetta',
 ]
 
 MIDDLEWARE = [

@@ -16,6 +16,7 @@ urlpatterns = [
     django.urls.path(
         'ckeditor/', django.urls.include('ckeditor_uploader.urls')
     ),
+    django.urls.path('rosetta/', django.urls.include('rosetta.urls')),
 ]
 
 if django.conf.settings.DEBUG:

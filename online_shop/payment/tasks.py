@@ -6,6 +6,8 @@ import weasyprint
 
 import django.core.mail
 
+from django.utils.translation import gettext_lazy as _
+
 
 @celery.shared_task
 def payment_completed_email(order_pk: int) -> None:
@@ -15,8 +17,10 @@ def payment_completed_email(order_pk: int) -> None:
     order = orders.models.Order.objects.filter(pk=order_pk).first()
     if not order:
         return
-    subject = f'Online Shop - Счет номер {order_pk}'
-    message = 'Добрый день. Ваш чек по покупке на нашем сайте'
+    subject = _('Online Shop - bill number %(order_pk)s') % {
+        'order_pk': order_pk
+    }
+    message = _('Hello. Here is your receipt about purchase on our site')
     email = django.core.mail.EmailMessage(
         subject=subject,
         body=message,

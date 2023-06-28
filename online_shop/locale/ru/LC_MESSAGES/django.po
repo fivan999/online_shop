@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-28 00:38+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2023-06-28 15:32+0300\n"
+"PO-Revision-Date: 2023-06-28 15:28+0300\n"
+"Last-Translator:   <fivan999@yandex.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.9.9\n"
 
-#: .\cart\apps.py:11
+#: .\cart\apps.py:10
 msgid "cart"
 msgstr "корзина"
 
-#: .\cart\forms.py:12
+#: .\cart\forms.py:12 .\templates\cart\detail.html:15
+#: .\templates\orders\pdf.html:25 .\templates\payment\process.html:15
 msgid "Quantity"
 msgstr "Количество"
 
@@ -32,13 +34,21 @@ msgstr "Количество"
 msgid "Choose quantity of products"
 msgstr "Выберите количество товаров"
 
-#: .\core\apps.py:11
+#: .\core\apps.py:10
 msgid "core"
 msgstr "кор"
 
-#: .\coupons\apps.py:11 .\coupons\models.py:38
+#: .\core\services.py:39
+msgid "export to csv"
+msgstr "экспортировать в csv"
+
+#: .\coupons\apps.py:10 .\coupons\models.py:38
 msgid "coupons"
 msgstr "купоны"
+
+#: .\coupons\forms.py:9
+msgid "Code"
+msgstr "Код"
 
 #: .\coupons\forms.py:9
 msgid "Enter coupon's activation code"
@@ -68,7 +78,9 @@ msgstr "активен до"
 msgid "Coupon's expiration time"
 msgstr "Время истечения действия купона"
 
-#: .\coupons\models.py:24 .\orders\models.py:70
+#: .\coupons\models.py:24 .\orders\models.py:70 .\templates\cart\detail.html:60
+#: .\templates\orders\create.html:22 .\templates\orders\pdf.html:48
+#: .\templates\payment\process.html:42
 msgid "discount"
 msgstr "скидка"
 
@@ -84,23 +96,25 @@ msgstr "активен"
 msgid "Whether coupon is active or not"
 msgstr "Активен ли купон или нет"
 
-#: .\coupons\models.py:37 .\orders\models.py:62
+#: .\coupons\models.py:37 .\orders\models.py:62 .\templates\cart\detail.html:59
+#: .\templates\orders\create.html:22 .\templates\orders\pdf.html:47
+#: .\templates\payment\process.html:41
 msgid "coupon"
 msgstr "купон"
 
-#: .\online_shop\settings.py:115
+#: .\online_shop\settings.py:116
 msgid "English"
 msgstr "Английский"
 
-#: .\online_shop\settings.py:116
+#: .\online_shop\settings.py:117
 msgid "Russian"
 msgstr "Русский"
 
-#: .\orders\apps.py:11 .\orders\models.py:67 .\orders\models.py:85
+#: .\orders\apps.py:10 .\orders\models.py:67 .\orders\models.py:85
 msgid "orders"
 msgstr "заказы"
 
-#: .\orders\models.py:18 .\shop\models.py:32 .\shop\models.py:68
+#: .\orders\models.py:18 .\shop\models.py:30 .\shop\models.py:66
 msgid "name"
 msgstr "имя"
 
@@ -180,6 +194,11 @@ msgstr "Купон, примененный к заказу"
 msgid "Order's discount"
 msgstr "Скидка на заказ"
 
+#: .\orders\models.py:81
+#, python-format
+msgid "Order %(pk)s"
+msgstr "Заказ %(pk)s"
+
 #: .\orders\models.py:84 .\orders\models.py:134
 msgid "order"
 msgstr "заказ"
@@ -192,7 +211,7 @@ msgstr "заказ в stripe"
 msgid "Order to which the product relates"
 msgstr "Заказ, к которому относится товар"
 
-#: .\orders\models.py:140 .\shop\models.py:111
+#: .\orders\models.py:140 .\shop\models.py:109 .\templates\base.html:21
 msgid "product"
 msgstr "товар"
 
@@ -200,11 +219,11 @@ msgstr "товар"
 msgid "Product to which the order relates"
 msgstr "Товар, к которому относится заказ"
 
-#: .\orders\models.py:147 .\shop\models.py:90
+#: .\orders\models.py:147 .\shop\models.py:88
 msgid "price"
 msgstr "цена"
 
-#: .\orders\models.py:148 .\shop\models.py:91
+#: .\orders\models.py:148 .\shop\models.py:89
 msgid "Product's price"
 msgstr "Цена товара"
 
@@ -216,6 +235,11 @@ msgstr "количество"
 msgid "Product's quantity in the order"
 msgstr "Количество товара в заказе"
 
+#: .\orders\models.py:158
+#, python-format
+msgid "Product in the order %(pk)s"
+msgstr "Товар в заказе %(pk)s"
+
 #: .\orders\models.py:161
 msgid "product in the order"
 msgstr "товар в заказе"
@@ -224,88 +248,268 @@ msgstr "товар в заказе"
 msgid "products in the order"
 msgstr "товары в заказе"
 
-#: .\payment\apps.py:11
-#, fuzzy
-#| msgid "payment id"
-msgid "payment"
-msgstr "идентификатор платежа"
+#: .\orders\tasks.py:15
+#, python-format
+msgid "Order %(order_pk)s"
+msgstr "Заказ %(order_pk)s"
 
-#: .\shop\apps.py:11
+#: .\orders\tasks.py:17
+#, python-format
+msgid ""
+"Dear %(order_first_name)s,\n"
+"You succesfully made an order\n"
+"Order's number - %(order_pk)s"
+msgstr ""
+"Уважаемый %(order_first_name)s,\n"
+"Вы успешно сделали заказ\n"
+"Номер заказа - %(order_pk)s"
+
+#: .\payment\apps.py:10
+msgid "payment"
+msgstr "платеж"
+
+#: .\payment\tasks.py:20
+#, python-format
+msgid "Online Shop - bill number %(order_pk)s"
+msgstr "Online Shop - счет номер %(order_pk)s"
+
+#: .\payment\tasks.py:23
+msgid "Hello. Here is your receipt about purchase on our site"
+msgstr "Здравствуйте. Ваш чек о покупке на нашем сайте"
+
+#: .\shop\apps.py:10
 msgid "shop"
 msgstr "магазин"
 
-#: .\shop\models.py:32
+#: .\shop\models.py:30
 msgid "Category's name"
 msgstr "Название категории"
 
-#: .\shop\models.py:36 .\shop\models.py:72
+#: .\shop\models.py:34 .\shop\models.py:70
 msgid "slug"
 msgstr "слаг"
 
-#: .\shop\models.py:37
+#: .\shop\models.py:35
 msgid "Name's slug"
 msgstr "Название слага"
 
-#: .\shop\models.py:42 .\shop\models.py:64
+#: .\shop\models.py:40 .\shop\models.py:62
 msgid "category"
 msgstr "категория"
 
-#: .\shop\models.py:43
+#: .\shop\models.py:41
 msgid "categories"
 msgstr "категории"
 
-#: .\shop\models.py:65
+#: .\shop\models.py:63
 msgid "Category to which product relates to"
 msgstr "Категория, к которой относится товар"
 
-#: .\shop\models.py:68
+#: .\shop\models.py:66
 msgid "Product's name"
 msgstr "Имя товара"
 
-#: .\shop\models.py:73
+#: .\shop\models.py:71
 msgid "Product's slug"
 msgstr "Слаг товара"
 
-#: .\shop\models.py:77
+#: .\shop\models.py:75
 msgid "image"
 msgstr "картинка"
 
-#: .\shop\models.py:78
+#: .\shop\models.py:76
 msgid "Product's image"
 msgstr "Картинка товара"
 
-#: .\shop\models.py:83
+#: .\shop\models.py:81
 msgid "Product's description"
 msgstr "Описание товара"
 
-#: .\shop\models.py:84
+#: .\shop\models.py:82
 msgid "description"
 msgstr "описание"
 
-#: .\shop\models.py:96
+#: .\shop\models.py:94
 msgid "available"
 msgstr "доступен"
 
-#: .\shop\models.py:97
+#: .\shop\models.py:95
 msgid "Whether product is available or not"
 msgstr "Доступен товар или нет"
 
-#: .\shop\models.py:101
+#: .\shop\models.py:99
 msgid "created"
 msgstr "создан"
 
-#: .\shop\models.py:102
+#: .\shop\models.py:100
 msgid "Creation time"
 msgstr "Время создания"
 
-#: .\shop\models.py:106
+#: .\shop\models.py:104
 msgid "updated"
 msgstr "обновлен"
 
-#: .\shop\models.py:107
+#: .\shop\models.py:105
 msgid "Update time"
 msgstr "Время обновления"
 
-#: .\shop\models.py:112
+#: .\shop\models.py:110
 msgid "products"
 msgstr "товары"
+
+#: .\templates\base.html:19
+msgid "Your cart"
+msgstr "Ваша корзина"
+
+#: .\templates\base.html:25
+msgid "Your cart is empty"
+msgstr "Ваша корзина пуста"
+
+#: .\templates\cart\detail.html:5 .\templates\cart\detail.html:9
+msgid "Cart"
+msgstr "Корзина"
+
+#: .\templates\cart\detail.html:13 .\templates\payment\process.html:12
+msgid "Image"
+msgstr "Картинка"
+
+#: .\templates\cart\detail.html:14 .\templates\orders\pdf.html:23
+#: .\templates\payment\process.html:13
+msgid "Product"
+msgstr "Товар"
+
+#: .\templates\cart\detail.html:16 .\templates\cart\detail.html:42
+msgid "Delete"
+msgstr "Удалить"
+
+#: .\templates\cart\detail.html:17 .\templates\orders\pdf.html:24
+#: .\templates\payment\process.html:14
+msgid "Unit price"
+msgstr "Цена за единицу"
+
+#: .\templates\cart\detail.html:18 .\templates\orders\pdf.html:26
+#: .\templates\payment\process.html:16
+msgid "Price"
+msgstr "Цена"
+
+#: .\templates\cart\detail.html:36
+msgid "Update"
+msgstr "Обновить"
+
+#: .\templates\cart\detail.html:53 .\templates\orders\pdf.html:40
+#: .\templates\payment\process.html:33
+msgid "Subtotal"
+msgstr "Подытог"
+
+#: .\templates\cart\detail.html:70 .\templates\orders\create.html:28
+#: .\templates\orders\pdf.html:56 .\templates\payment\process.html:51
+msgid "Total"
+msgstr "Итог"
+
+#: .\templates\cart\detail.html:78 .\templates\shop\product\detail.html:27
+msgid "People who bought this also bought"
+msgstr "Вместе с этим товаром покупатели выбирают"
+
+#: .\templates\cart\detail.html:89
+msgid "Activate coupon"
+msgstr "Активировать купон"
+
+#: .\templates\cart\detail.html:94
+msgid "Activate"
+msgstr "Активировать"
+
+#: .\templates\cart\detail.html:97 .\templates\shop\product\list.html:30
+msgid "Products"
+msgstr "Товары"
+
+#: .\templates\cart\detail.html:99
+msgid "Make an order"
+msgstr "Заказать"
+
+#: .\templates\orders\create.html:5 .\templates\orders\create.html:9
+msgid "Checkout"
+msgstr "Оформление заказа"
+
+#: .\templates\orders\create.html:11
+msgid "Your order"
+msgstr "Ваш заказ"
+
+#: .\templates\orders\create.html:44
+msgid "Place order"
+msgstr "Заказать"
+
+#: .\templates\orders\created.html:5
+msgid "Success"
+msgstr "Успешно"
+
+#: .\templates\orders\created.html:9
+msgid "Thank you for your order"
+msgstr "Спасибо за ваш заказ"
+
+#: .\templates\orders\created.html:10
+msgid "Your order has been successfully placed. Order number"
+msgstr "Вы успешно сделали заказ. Номер заказа"
+
+#: .\templates\orders\pdf.html:7
+msgid "Bill number"
+msgstr "Номер счета"
+
+#: .\templates\orders\pdf.html:12
+msgid "A receipt in the name of"
+msgstr "Счет на имя"
+
+#: .\templates\orders\pdf.html:19
+msgid "Purchased products"
+msgstr "Приобретенные товары"
+
+#: .\templates\orders\pdf.html:62
+msgid "Paid"
+msgstr "Оплачен"
+
+#: .\templates\orders\pdf.html:62
+msgid "Waiting for payment"
+msgstr "Ждет оплаты"
+
+#: .\templates\payment\cancel.html:4
+msgid "Payment cancelled"
+msgstr "Оплата отменена"
+
+#: .\templates\payment\cancel.html:7
+msgid "Payment not processed"
+msgstr "Оплата не совершена"
+
+#: .\templates\payment\cancel.html:8
+msgid "During payment processing an error occured"
+msgstr "Во время обработки платежа произошла ошибка"
+
+#: .\templates\payment\complete.html:4 .\templates\payment\complete.html:7
+msgid "Succesfull payment"
+msgstr "Платеж успешен"
+
+#: .\templates\payment\complete.html:8
+msgid "Payment processed succesfully"
+msgstr "Платеж успешно обработан"
+
+#: .\templates\payment\process.html:5
+msgid "Order payment"
+msgstr "Оплата заказа"
+
+#: .\templates\payment\process.html:8
+msgid "Order"
+msgstr "Заказ"
+
+#: .\templates\payment\process.html:60
+msgid "Pay"
+msgstr "Оплатить"
+
+#: .\templates\shop\product\detail.html:22
+msgid "Add to cart"
+msgstr "Добавить в корзину"
+
+#: .\templates\shop\product\list.html:11
+msgid "Categories"
+msgstr "Категории"
+
+#: .\templates\shop\product\list.html:14
+msgid "All products"
+msgstr "Все товары"

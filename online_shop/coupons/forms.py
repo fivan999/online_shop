@@ -6,5 +6,5 @@ class CouponActivateForm(django.forms.Form):
     """форма для активации купона"""
 
     code = django.forms.CharField(
-        label='Code', help_text=_("Enter coupon's activation code")
+        label=_('Code'), help_text=_("Enter coupon's activation code")
     )
