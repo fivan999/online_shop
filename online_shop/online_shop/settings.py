@@ -247,5 +247,13 @@ CELERY_TASK_ALWAYS_EAGER = (
 )
 
 REDIS_HOST = os.getenv('REDIS_HOST', default='localhost')
-REDIS_PORT = int(os.getenv('REDIS_PORT', default=6379))
+REDIS_PORT = 6379
 REDIS_DB = int(os.getenv('REDIS_DB', default=0))
+
+RABBITMQ_USER = os.getenv('RABBITMQ_USER', default='guest')
+RABBITMQ_PASS = os.getenv('RABBITMQ_PASS', default='')
+RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', default='localhost')
+
+CELERY_BROKER_URL = (
+    f'amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@{RABBITMQ_HOST}:5672//'
+)

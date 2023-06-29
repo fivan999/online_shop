@@ -1,0 +1,46 @@
+services:
+  online_shop:
+    build: .
+    env_file: online_shop/.env
+    command: >
+      sh -c "cd online_shop && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    depends_on:
+      - redis
+      - celery-worker
+  
+  celery-worker:
+    build: .
+    env_file: online_shop/.env
+    command: >
+      sh -c "cd online_shop && celery -A online_shop worker -l info"
+    depends_on:
+      - rabbitmq
+
+  redis:
+    image: redis:7.0-alpine
+    env_file: online_shop/.env
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
+    ports:
+      - "6379:6379"
+
+  stripe-cli:
+    image: stripe/stripe-cli
+    env_file: online_shop/.env
+    command: ["listen", "--forward-to", "localhost:8000/payment/order-paid-webhook/"]
+    depends_on:
+      - online_shop
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    env_file: online_shop/.env
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
